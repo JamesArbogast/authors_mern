@@ -6,7 +6,7 @@ const NewAuthor = (props) => {
     const [ name, setName ] = useState("");
 
     const [errors, setErrors] = useState(null);
-    
+
     const handleNewAuthorSubmit = (event) => {
         event.preventDefault();
         const newAuthor = {
@@ -21,6 +21,7 @@ const NewAuthor = (props) => {
             })
             .catch((err) => {
                 console.log(err);
+                setErrors(err.response?.data?.errors);
             });
     };
 
@@ -34,10 +35,7 @@ const NewAuthor = (props) => {
                 }}
             >
             <div className="form-group">
-                <label className="h6">Name</label>
-                {errors?.name && (
-                <span className="text-danger">{errors?.name?.message}</span>
-                )}
+                <label className="h6">Name: </label>
                 <input
                     onChange={(e) => {
                         setName(e.target.value);
@@ -45,9 +43,14 @@ const NewAuthor = (props) => {
                     type="text"
                     className="form-control"
                 />
+                <div>
+                    {errors?.name && (
+                    <span style={{ color: "red" }}>{errors.name.message}</span>
+                    )}
+                </div>
             </div>
-            <Link to="/authors"><button>Cancel</button></Link>
-            <button className="btn btn-sm btn-outline-success">Submit</button>
+            <Link to="/authors"><button style={{ color: "red", cursor: "pointer", margin: "5px", padding: "5px 20px 5px 20px" }}>Cancel</button></Link>
+            <button style={{cursor: "pointer", margin: "5px", padding: "5px 20px 5px 20px"}}>Submit</button>
             </form>
         </div>
     );

@@ -15,6 +15,7 @@ const EditAuthor = (props) => {
                 setName(res.data.name);
             })
             .catch((err) => {
+                setErrors(err.response?.data?.errors);
                 console.log(err);
             });
     }, [props.id]);
@@ -36,10 +37,6 @@ const EditAuthor = (props) => {
             navigate("/authors/" + props.id);
         })
         .catch((err) => {
-        /* 
-        This .catch only happens if the controller .catch has:
-        res.status(400).json(err);
-        */
             setErrors(err.response?.data?.errors);
             console.log(err);
         });
@@ -55,10 +52,7 @@ const EditAuthor = (props) => {
             }}
             >
             <div className="form-group">
-                <label className="h6">Name</label>
-                {errors?.name && (
-                <span className="text-danger">{errors?.name?.message}</span>
-                )}
+                <label className="h6">Name: </label>
                 <input
                     onChange={(e) => {
                         setName(e.target.value);
@@ -67,7 +61,12 @@ const EditAuthor = (props) => {
                     className="form-control"
                     value={name}
                 />
-        </div>
+            </div>
+            <div>
+                {errors?.name && (
+                    <span style={{ color: "red" }}>{errors.name.message}</span>
+                )}
+            </div>
 
         <button className="btn btn-sm btn-outline-success">Save</button>
         </form>

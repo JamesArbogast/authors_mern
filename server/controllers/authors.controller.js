@@ -65,7 +65,7 @@ module.exports = {
                 res.json(updatedAuthor);
             })
             .catch((err) => {
-                res.json(err);
+                res.status(400).json(err);
             });
         },
 
